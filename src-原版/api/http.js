@@ -1,0 +1,27 @@
+import axios from 'axios';
+import qs from 'qs';
+import {message} from 'antd';
+import _ from '@/assets/utils';
+
+const http = axios.create({
+  baseURL: '/api',
+  timeout: 60000
+});
+
+// 格式化请求主体
+// 如果为普通对象将其格式化为urlencoded格式
+http.defaults.transformRequest = data => {
+  if (_.isPlainObject(data)) data = qs.stringify(data);
+  return data;
+};
+http.interceptors.response.use(
+  response => {
+    return response.data;
+  },
+  reason => {
+    // 网络层失败：统一提示
+    message.error('当前网络繁忙，请您稍后再试~');
+    return Promise.reject(reason);
+  }
+);
+export default http;

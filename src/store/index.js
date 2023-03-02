@@ -2,6 +2,7 @@ import {configureStore} from '@reduxjs/toolkit';
 import reduxLogger from 'redux-logger';
 import reduxThunk from 'redux-thunk';
 import taskSliceReducer from './features/taskSlice';
+
 // toolkit基于切片机制   把reducer和actionCreator混合在一起了
 const store = configureStore({
   // 指定reducer

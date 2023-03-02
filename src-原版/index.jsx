@@ -6,17 +6,12 @@ import Task from './views/Task';
 import './index.scss';
 // import Demo from './views/Demo';
 // import Demo from './views/Demo2';
-import {Provider} from 'react-redux';
-import store from './store/index';
-
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <>
     {/* 汉化操作 */}
     <ConfigProvider locale={zhCN}>
-      <Provider store={store}>
-        <Task />
-      </Provider>
+      <Task />
       {/* <Demo /> */}
     </ConfigProvider>
   </>

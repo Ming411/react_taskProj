@@ -1,6 +1,6 @@
 /* Task板块切片 */
 import {createSlice} from '@reduxjs/toolkit';
-
+import {getTaskList} from '../../api';
 const taskSlice = createSlice({
   name: 'task', // 设置切片的名字
   // 设置初始状态
@@ -34,5 +34,24 @@ const taskSlice = createSlice({
     }
   }
 });
+
+//从切换中获取actionCreator:此处解构的方法和上面reducers中的方法，仅仅是函数名相同；方法执行，返回需要派发的行为对象：后期我们可以基于dispatch进行任务派发即可！！
+export let {getAllTaskList, removeTask, updateTask} = taskSlice.actions;
+// console.log(getAllTaskList([])); //{type:'task/getAllTaskList',payload:[]}
+// console.log(taskSlice);
+
+/* 实现异步派发 redux-thunk*/
+export const getAllTaskListAsync = () => {
+  return async dispatch => {
+    let list = [];
+    try {
+      let result = await getTaskList(0);
+      if (+result.code === 0) {
+        list = result.list;
+      }
+    } catch (_) {}
+    dispatch(getAllTaskList(list));
+  };
+};
 
 export default taskSlice.reducer;

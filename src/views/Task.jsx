@@ -3,6 +3,8 @@ import './Task.scss';
 import {Button, Tag, Table, Popconfirm, Modal, Form, Input, DatePicker, message} from 'antd';
 import {flushSync} from 'react-dom';
 import {getTaskList, addTask, removeTask, completeTask} from '@/api';
+// import {useSelector, useDispatch} from 'react-redux';
+// import {getAllTaskListAsync, removeTask, updateTask} from '../store/features/taskSlice';
 // 处理日期的方法
 const zero = function zero(text) {
   text = String(text);
@@ -54,16 +56,16 @@ export default class Task extends PureComponent {
         let {id, state} = record;
         return (
           <>
-            <Popconfirm title='您确定要删除此任务吗？' onConfirm={this.handleRemove.bind(null, id)}>
-              <Button type='link'>删除</Button>
+            <Popconfirm title="您确定要删除此任务吗？" onConfirm={this.handleRemove.bind(null, id)}>
+              <Button type="link">删除</Button>
             </Popconfirm>
 
             {+state !== 2 ? (
               <Popconfirm
-                title='您确把此任务设置为完成吗？'
+                title="您确把此任务设置为完成吗？"
                 onConfirm={this.handleUpdate.bind(null, id)}
               >
-                <Button type='link'>完成</Button>
+                <Button type="link">完成</Button>
               </Popconfirm>
             ) : null}
           </>
@@ -192,11 +194,11 @@ export default class Task extends PureComponent {
   render() {
     let {tableData, tableLoading, modalVisible, confirmLoading, selectIndex} = this.state;
     return (
-      <div className='task-box'>
-        <div className='header'>
-          <h2 className='title'>OA</h2>
+      <div className="task-box">
+        <div className="header">
+          <h2 className="title">OA</h2>
           <Button
-            type='primary'
+            type="primary"
             onClick={() => {
               this.setState({
                 modalVisible: true
@@ -206,7 +208,7 @@ export default class Task extends PureComponent {
             新增任务
           </Button>
         </div>
-        <div className='tag-box'>
+        <div className="tag-box">
           {['全部', '未完成', '已完成'].map((item, index) => {
             return (
               <Tag
@@ -227,21 +229,21 @@ export default class Task extends PureComponent {
           columns={this.columns}
           tableLoading={tableLoading}
           pagination={false}
-          rowKey='id' // 指定唯一值，key
+          rowKey="id" // 指定唯一值，key
         />
 
         <Modal
-          title='新增任务窗口'
+          title="新增任务窗口"
           open={modalVisible}
           confirmLoading={confirmLoading}
           keyboard={false} // 禁止键盘操作关闭
           maskClosable={false} // 禁止点击遮罩层关闭
-          okText='确认提交'
+          okText="确认提交"
           onCancel={this.closeModal}
           onOk={this.submit}
         >
           <Form
-            layout='vertical'
+            layout="vertical"
             requiredMark={true} // 必填是否需要小红点
             // 设置初始值
             initialValues={{
@@ -251,9 +253,9 @@ export default class Task extends PureComponent {
             ref={x => (this.formIns = x)}
           >
             <Form.Item
-              label='任务描述'
-              name='task' // 将表单收集到的值存放至该字段
-              validateTrigger='onBlur'
+              label="任务描述"
+              name="task" // 将表单收集到的值存放至该字段
+              validateTrigger="onBlur"
               rules={[
                 {required: true, message: '任务描述是必填项'},
                 {min: 6, message: '输入的内容至少6位及以上'}
@@ -275,9 +277,9 @@ export default class Task extends PureComponent {
               ></Input.TextArea>
             </Form.Item>
             <Form.Item
-              label='预期完成时间'
-              name='time'
-              validateTrigger='onBlur'
+              label="预期完成时间"
+              name="time"
+              validateTrigger="onBlur"
               rules={[{required: true, message: '预期完成时间是必填项'}]}
             >
               <DatePicker
